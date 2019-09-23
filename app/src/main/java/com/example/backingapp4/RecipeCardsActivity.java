@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.backingapp4.viewmodels.RecipeCardsViewModel;
 import com.example.backingapp4.databinding.ActivityRecipeCardsBinding;
@@ -31,7 +32,13 @@ public class RecipeCardsActivity extends AppCompatActivity {
         activityRecipeCardsBinding = DataBindingUtil.setContentView(this,R.layout.activity_recipe_cards);
         activityRecipeCardsBinding.CardsID.setLayoutManager(new LinearLayoutManager(this));
         activityRecipeCardsBinding.CardsID.setHasFixedSize(true);
-        cardsAdapter = new CardsAdapter(this);
+        cardsAdapter = new CardsAdapter(this, new RecyclerViewClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //Make Intent to the detail fragment
+                Toast.makeText(getApplicationContext() ,"pos:"+position,Toast.LENGTH_SHORT).show();
+            }
+        });
         activityRecipeCardsBinding.CardsID.setAdapter(cardsAdapter);
 
         recipeCardsViewModel = new ViewModelProvider(this , new Myfactory()).get(RecipeCardsViewModel.class);
