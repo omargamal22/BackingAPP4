@@ -1,4 +1,4 @@
-package com.example.backingapp4;
+package com.example.backingapp4.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.backingapp4.R;
+import com.example.backingapp4.ClickListener;
 import com.example.backingapp4.viewmodels.RecipeCardsViewModel;
 import com.example.backingapp4.databinding.RecipeCardBinding;
 
@@ -17,19 +19,19 @@ import java.util.ArrayList;
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder> {
     private Context context;
     private  ArrayList<RecipeCardsViewModel>recipeCardsViewModel;
-    private  RecyclerViewClickListener recyclerViewClickListener;
+    private ClickListener clickListener;
 
-    public CardsAdapter(Context context , RecyclerViewClickListener recyclerViewClickListener ) {
+    public CardsAdapter(Context context , ClickListener clickListener) {
         this.context = context;
         this.recipeCardsViewModel = new ArrayList<>();
-        this.recyclerViewClickListener = recyclerViewClickListener;
+        this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        final RecipeCardBinding recipeCardBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.recipe_card,parent,false);
+        final RecipeCardBinding recipeCardBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.recipe_card,parent,false);
         return  new MyViewHolder(recipeCardBinding);
     }
 
@@ -40,7 +42,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
         holder.recipeCardBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerViewClickListener.onItemClick(position);
+                clickListener.onItemClick(recipeCardsViewModel.get(position));
             }
         });
         holder.recipeCardBinding.executePendingBindings();

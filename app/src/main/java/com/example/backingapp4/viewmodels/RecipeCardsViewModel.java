@@ -25,7 +25,7 @@ public class RecipeCardsViewModel extends ViewModel {
     public ArrayList<Step> steps;
     public String servings;
     public String imageURL;
-    private MutableLiveData<ArrayList<RecipeCardsViewModel>> arrayListMutableLiveData = new MutableLiveData();
+    private static MutableLiveData<ArrayList<RecipeCardsViewModel>> arrayListMutableLiveData = new MutableLiveData();
 
 
     public RecipeCardsViewModel(){

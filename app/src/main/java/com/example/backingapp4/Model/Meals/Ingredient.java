@@ -4,15 +4,15 @@ package com.example.backingapp4.Model.Meals;
 
  public class Ingredient {
     public int id;
-    private double quantity;
+    private String quantity;
     private String measure;
     private String ingredient;
 
-     public double getQuantity() {
+     public String getQuantity() {
          return quantity;
      }
 
-     public void setQuantity(double quantity) {
+     public void setQuantity(String quantity) {
          this.quantity = quantity;
      }
 
@@ -32,7 +32,7 @@ package com.example.backingapp4.Model.Meals;
          this.ingredient = ingredient;
      }
 
-     public Ingredient(double quantity, String measure, String ingredient) {
+     public Ingredient(String quantity, String measure, String ingredient) {
 
          this.quantity = quantity;
          this.measure = measure;

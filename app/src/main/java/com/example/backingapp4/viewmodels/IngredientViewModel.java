@@ -9,15 +9,17 @@ import java.util.ArrayList;
 
 public class IngredientViewModel extends ViewModel {
 
-    private double quantity;
-    private String measure;
-    private String ingredient;
+    public String quantity;
+    public String measure;
+    public String ingredient;
 
-    private MutableLiveData<ArrayList<IngredientViewModel>> arrayListMutableLiveData = new MutableLiveData();
+    private static MutableLiveData<ArrayList<IngredientViewModel>> arrayListMutableLiveData = new MutableLiveData();
 
     public MutableLiveData<ArrayList<IngredientViewModel>> getArrayListMutableLiveData() {
         return arrayListMutableLiveData;
     }
+
+    public IngredientViewModel(){}
 
     public IngredientViewModel(Ingredient ingredient) {
         this.quantity = ingredient.getQuantity();
@@ -25,7 +27,7 @@ public class IngredientViewModel extends ViewModel {
         this.ingredient = ingredient.getIngredient();
     }
 
-    public IngredientViewModel(ArrayList<Ingredient> ingredients) {
+    public void MakeViewModel(ArrayList<Ingredient> ingredients) {
         ArrayList<IngredientViewModel>ingredientViewModels = new ArrayList<>();
         IngredientViewModel ingredientViewModel;
         Ingredient ingredient;

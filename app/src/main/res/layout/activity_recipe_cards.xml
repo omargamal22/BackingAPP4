@@ -7,10 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".RecipeCardsActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar1"
+        app:title="Backing App"
+        android:background="@color/yallow"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/CardsID"/>
+        android:id="@+id/CardsID"
+        android:layout_below="@id/toolbar1"/>
 
     <com.wang.avi.AVLoadingIndicatorView
         android:layout_width="wrap_content"

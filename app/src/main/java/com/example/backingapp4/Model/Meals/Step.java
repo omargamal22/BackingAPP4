@@ -3,13 +3,13 @@ package com.example.backingapp4.Model.Meals;
 
 public class Step {
 
-    private int id;
+    private String id;
     private String shortDescription;
     private String description;
     private String videoURL;
     private String thumbnailURL;
 
-    public Step(int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
+    public Step(String id, String shortDescription, String description, String videoURL, String thumbnailURL) {
         this.id = id;
         this.shortDescription = shortDescription;
         this.description = description;
@@ -17,11 +17,11 @@ public class Step {
         this.thumbnailURL = thumbnailURL;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
