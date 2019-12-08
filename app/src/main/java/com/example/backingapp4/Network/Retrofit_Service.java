@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Retrofit_Service  {
 
 
-    private static MutableLiveData<ArrayList<RecipeCardsViewModel>> res = new MutableLiveData<>() ;
+    public static MutableLiveData<ArrayList<RecipeCardsViewModel>> res = new MutableLiveData<>() ;
     private static String E;
 
     public static MutableLiveData<ArrayList<RecipeCardsViewModel>>  Get_Retrofit_Service(){

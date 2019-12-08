@@ -1,8 +1,6 @@
 package com.example.backingapp4.detailsfragments;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.backingapp4.Adapters.IngredientsAdapter;
-import com.example.backingapp4.Adapters.StepsAdapte;
 import com.example.backingapp4.Events;
 import com.example.backingapp4.GlobalBus;
 import com.example.backingapp4.R;
 import com.example.backingapp4.databinding.IngredientsFragBinding;
 import com.example.backingapp4.viewmodels.IngredientViewModel;
 import com.example.backingapp4.viewmodels.RecipeCardsViewModel;
-import com.example.backingapp4.viewmodels.StepsViewModel;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -36,7 +32,7 @@ public class IngredientsFrag extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private final String LIST_STATE_KEY = "IngredientState";
     private RecipeCardsViewModel recipeCardsViewModel;
-    private boolean made = false;
+    IngredientViewModel ingredientViewModel;
 
 
     @Override
@@ -45,29 +41,23 @@ public class IngredientsFrag extends Fragment {
         super.onDestroy();
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        GlobalBus.getBus().register(this);
         View view = inflater.inflate(R.layout.ingredients_frag,container,false);
+        ingredientsAdapter = new IngredientsAdapter(getContext());
+        ingredientViewModel = new ViewModelProvider(this,new Myfactory()).get(IngredientViewModel.class);
+        GlobalBus.getBus().register(this);
+        return view;
+    }
+
+    private void updateAdapter(ArrayList<IngredientViewModel> ingredientViewModels) {
         ingredientsFragBinding = DataBindingUtil.setContentView(getActivity(),R.layout.ingredients_frag);
         linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         ingredientsFragBinding.ingredientsCards.setLayoutManager(linearLayoutManager);
-        ingredientsAdapter = new IngredientsAdapter();
+        ingredientsAdapter.setViewModels(ingredientViewModels);
         ingredientsFragBinding.ingredientsCards.setAdapter(ingredientsAdapter);
-
-        if(!made){
-            IngredientViewModel ingredientViewModel = new ViewModelProvider(this,new Myfactory()).get(IngredientViewModel.class);
-            ingredientViewModel.MakeViewModel(recipeCardsViewModel.ingredients);
-            ingredientViewModel.getArrayListMutableLiveData().observe(this, new Observer<ArrayList<IngredientViewModel>>() {
-                @Override
-                public void onChanged(ArrayList<IngredientViewModel> ingredientViewModels) {
-                    ingredientsAdapter.setViewModels(ingredientViewModels);
-                }
-            });
-        }
-
-        return view;
     }
 
     @Override
@@ -91,17 +81,15 @@ public class IngredientsFrag extends Fragment {
     @Subscribe(sticky = true  )
     public void ReciveViewModel(Events.ActivityActivityMessage event){
         recipeCardsViewModel=(RecipeCardsViewModel) event.getMessage();
-        if(IngredientsFrag.this.isVisible()){
-            IngredientViewModel ingredientViewModel = new ViewModelProvider(this,new Myfactory()).get(IngredientViewModel.class);
-            ingredientViewModel.MakeViewModel(recipeCardsViewModel.ingredients);
-            ingredientViewModel.getArrayListMutableLiveData().observe(this, new Observer<ArrayList<IngredientViewModel>>() {
-                @Override
-                public void onChanged(ArrayList<IngredientViewModel> ingredientViewModels) {
-                    ingredientsAdapter.setViewModels(ingredientViewModels);
-                }
-            });
-            made = true;
-        }
+        ingredientViewModel.MakeViewModel(recipeCardsViewModel.ingredients);
+        ingredientViewModel.getArrayListMutableLiveData().observe(this, new Observer<ArrayList<IngredientViewModel>>() {
+            @Override
+            public void onChanged(ArrayList<IngredientViewModel> ingredientViewModels) {
+                updateAdapter(ingredientViewModels);
+                //ingredientsAdapter.setViewModels(ingredientViewModels);
+
+            }
+        });
     }
 
     class Myfactory implements ViewModelProvider.Factory {

@@ -3,8 +3,6 @@ package com.example.backingapp4.viewmodels;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
-import androidx.databinding.BaseObservable;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -25,7 +23,7 @@ public class RecipeCardsViewModel extends ViewModel {
     public ArrayList<Step> steps;
     public String servings;
     public String imageURL;
-    private static MutableLiveData<ArrayList<RecipeCardsViewModel>> arrayListMutableLiveData = new MutableLiveData();
+    private static MutableLiveData<ArrayList<RecipeCardsViewModel>> arrayListMutableLiveData = new MutableLiveData<>();
 
 
     public RecipeCardsViewModel(){
@@ -43,6 +41,7 @@ public class RecipeCardsViewModel extends ViewModel {
 
     public void getData(){
         arrayListMutableLiveData=Retrofit_Service.Get_Retrofit_Service();
+
 
     }
 

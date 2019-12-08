@@ -1,5 +1,7 @@
 package com.example.backingapp4.Adapters;
 
+import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -16,7 +18,9 @@ import java.util.ArrayList;
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.MyIngredientsViewHolder> {
 
     private ArrayList<IngredientViewModel> ingredientViewModels;
-    public IngredientsAdapter (){
+    Context context;
+    public IngredientsAdapter (Context context){
+        this.context = context;
         ingredientViewModels = new ArrayList<>();
     }
 
@@ -24,6 +28,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public MyIngredientsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final IngredientsItemBinding ingredientsItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.ingredients_item,parent,false);
+        ViewGroup.LayoutParams layoutParams = ingredientsItemBinding.IngCard.getLayoutParams();
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        layoutParams.width = (int) (displayMetrics.heightPixels * 0.5);
+        ingredientsItemBinding.IngCard.setLayoutParams(layoutParams);
         return new MyIngredientsViewHolder(ingredientsItemBinding);
     }
 
@@ -31,6 +40,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         ingredientViewModels.clear();
         ingredientViewModels.addAll(newVals);
         notifyDataSetChanged();
+
 
     }
 

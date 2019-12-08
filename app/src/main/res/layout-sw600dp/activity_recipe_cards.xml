@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecipeCardsActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:id="@+id/twobane">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
